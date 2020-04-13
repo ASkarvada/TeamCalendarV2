@@ -13,7 +13,7 @@ namespace TeamCalendar
 
         public string Password { get; set; }
 
-        public static User create(string name, string password)
+        public static User Create(string name, string password)
         {
             User user = new User();
             user.Name = name;

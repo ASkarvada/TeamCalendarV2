@@ -21,9 +21,9 @@ namespace TeamCalendar
 
         public DateTime To { get; set; }
 
-        public Relation<User> createdBy { get; set; }
+        public Relation<User> CreatedBy { get; set; }
 
-        public static Meeting create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy)
+        public static Meeting Create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy)
         {
             Meeting meeting = new Meeting();
 
@@ -33,7 +33,7 @@ namespace TeamCalendar
             meeting.Color = color;
             meeting.From = from;
             meeting.To = to;
-            meeting.createdBy = Relation<User>.Create(createdBy);
+            meeting.CreatedBy = Relation<User>.Create(createdBy);
 
             return meeting;
         }

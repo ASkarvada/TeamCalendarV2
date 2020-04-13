@@ -15,16 +15,16 @@ namespace TeamCalendar
 
         const string storagePath = "storage.xml";
 
-        public static Storage getStorage()
+        public static Storage GetStorage()
         {
             if (storage == null)
             {
-                init();
+                Init();
             }
             return storage;
         }
 
-        private static void init()
+        private static void Init()
         {
             try
             {
@@ -36,13 +36,13 @@ namespace TeamCalendar
             }
             catch
             {
-                save();
-                init();
+                Save();
+                Init();
             }
 
         }
 
-        public static void save()
+        public static void Save()
         {
 
             System.Xml.Serialization.XmlSerializer writer =
@@ -50,17 +50,17 @@ namespace TeamCalendar
 
 
             FileStream file = File.Create(storagePath);
-            Storage saveStorage;
+            Storage SaveStorage;
             if (storage == null)
             {
-                saveStorage = new Storage();
+                SaveStorage = new Storage();
             }
             else
             {
-                saveStorage = storage;
+                SaveStorage = storage;
             }
 
-            writer.Serialize(file, saveStorage);
+            writer.Serialize(file, SaveStorage);
             file.Close();
         }
     }

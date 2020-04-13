@@ -9,16 +9,16 @@ namespace TeamCalendar
     public class Relation<T> where T : Type
     {
         public Guid id;
-        public static Relation<T> create(T item)
+        public static Relation<T> Create(T item)
         {
             Relation<T> rl = new Relation<T>();
             rl.id = item.id;
             return rl;
         }
 
-        public T get()
+        public T Get()
         {
-            return StorageManager.getStorage().findById<T>(id);
+            return StorageManager.GetStorage().findById<T>(id);
         }
     }
 }
