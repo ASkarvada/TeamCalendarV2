@@ -10,11 +10,12 @@ namespace TeamCalendar
     {
         public List<User> users;
 
-        public Relation<Meeting> meetings;
+        public List<Meeting> Meetings;
 
         public Storage()
         {
             users = new List<User>();
+            Meetings = new List<Meeting>();
         }
 
         public User findUserByName(string name)
@@ -46,7 +47,16 @@ namespace TeamCalendar
             }
             else if (typeof(T) == typeof(Meeting))
             {
-
+                foreach (Meeting m in Meetings)
+                {
+                    if (m.id == id)
+                    {
+                        if (m is T meeting)
+                        {
+                            return meeting;
+                        }
+                    }
+                }
             }
             else
             {
@@ -56,6 +66,19 @@ namespace TeamCalendar
             throw new Exception("Nepodařilo se najít daný objekt v uložišti.");
         }
 
+        public List<Meeting> FindMeetingsByDate(DateTime date)
+        {
+            List<Meeting> vysledky = new List<Meeting>();
+            foreach (Meeting meeting in Meetings)
+            {
+                //Zjistit jestli to je v ten den
+                if (true)
+                {
+                    vysledky.Add(meeting);
+                }
+            }
+            return vysledky;
+        }
     }
     
 

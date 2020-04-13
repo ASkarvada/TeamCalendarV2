@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace TeamCalendar
 {
     public class StorageManager
     {
         private static Storage storage;
+
+        public static User loggedUser;
 
         const string storagePath = "storage.xml";
 
@@ -27,7 +30,7 @@ namespace TeamCalendar
             {
                 System.Xml.Serialization.XmlSerializer reader =
              new System.Xml.Serialization.XmlSerializer(typeof(Storage));
-                System.IO.StreamReader file = new System.IO.StreamReader(storagePath);
+                StreamReader file = new StreamReader(storagePath);
                 StorageManager.storage = (Storage)reader.Deserialize(file);
                 file.Close();
             }
@@ -46,7 +49,7 @@ namespace TeamCalendar
                 new System.Xml.Serialization.XmlSerializer(typeof(Storage));
 
 
-            System.IO.FileStream file = System.IO.File.Create(storagePath);
+            FileStream file = File.Create(storagePath);
             Storage saveStorage;
             if (storage == null)
             {

@@ -23,7 +23,7 @@ namespace TeamCalendar
 
         public Relation<User> createdBy { get; set; }
 
-        public static Meeting create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, Relation<User> createdBy)
+        public static Meeting create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy)
         {
             Meeting meeting = new Meeting();
 
@@ -33,7 +33,7 @@ namespace TeamCalendar
             meeting.Color = color;
             meeting.From = from;
             meeting.To = to;
-            meeting.createdBy = createdBy;
+            meeting.createdBy = Relation<User>.Create(createdBy);
 
             return meeting;
         }
