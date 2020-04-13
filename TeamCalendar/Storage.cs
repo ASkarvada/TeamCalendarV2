@@ -10,12 +10,12 @@ namespace TeamCalendar
     {
         public List<User> users;
 
-        public List<Meeting> Meetings;
+        public List<Meeting> meetings;
 
         public Storage()
         {
             users = new List<User>();
-            Meetings = new List<Meeting>();
+            meetings = new List<Meeting>();
         }
 
         public User findUserByName(string name)
@@ -47,7 +47,7 @@ namespace TeamCalendar
             }
             else if (typeof(T) == typeof(Meeting))
             {
-                foreach (Meeting m in Meetings)
+                foreach (Meeting m in meetings)
                 {
                     if (m.id == id)
                     {
@@ -69,7 +69,7 @@ namespace TeamCalendar
         public List<Meeting> FindMeetingsByDate(DateTime date)
         {
             List<Meeting> vysledky = new List<Meeting>();
-            foreach (Meeting meeting in Meetings)
+            foreach (Meeting meeting in meetings)
             {
                 //Zjistit jestli to je v ten den
                 if (true)

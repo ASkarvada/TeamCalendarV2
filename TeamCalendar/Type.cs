@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeamCalendar
 {
-    public class Type
+    public abstract class Type
     {
         public Guid id;
 
