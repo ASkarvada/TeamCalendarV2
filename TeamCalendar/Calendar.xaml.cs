@@ -22,6 +22,8 @@ namespace TeamCalendar
         public Win_Calendar()
         {
             InitializeComponent();
+            tbl_uzivatel.Text = StorageManager.loggedUser.Name;
+            
         }
     }
 }

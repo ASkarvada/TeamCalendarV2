@@ -29,8 +29,8 @@
         <Button x:Name="b_sipka_zpet" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="93" Height="50" Grid.Row="0" Grid.Column="0"/>
         <Button x:Name="b_sipka_vpred" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="93" Height="50" Grid.Row="0" Grid.Column="3"/>
         <Button x:Name="b_SNS" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="206" Height="50" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2"/>
-        <TextBlock x:Name="tb_mesic" Grid.Column="1" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="94"/>
-        <TextBlock x:Name="tb_rok" Grid.Column="2" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="93"/>
+        <TextBlock x:Name="tbl_mesic" Grid.Column="1" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="94"/>
+        <TextBlock x:Name="tbl_rok" Grid.Column="2" HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="93"/>
         <TextBlock x:Name="pondeli" HorizontalAlignment="Left" Height="20" Margin="10,20,0,0" TextWrapping="Wrap" Text="Pondělí" VerticalAlignment="Top" Width="93" Grid.Row="1" FontSize="18" TextAlignment="Center"/>
         <TextBlock x:Name="utery" HorizontalAlignment="Left" Height="30" Margin="10,20,0,0" TextWrapping="Wrap" Text="Úterý" VerticalAlignment="Top" Width="93" Grid.Row="1" Grid.Column="1" FontSize="18" TextAlignment="Center"/>
         <TextBlock x:Name="streda" HorizontalAlignment="Left" Height="20" Margin="10,20,0,0" TextWrapping="Wrap" Text="Středa" VerticalAlignment="Top" Width="93" Grid.Row="1" Grid.Column="2" FontSize="18" TextAlignment="Center"/>
@@ -75,5 +75,7 @@
         <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="93" Height="39" Grid.Column="5"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="93" Height="39"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="93" Height="39" Grid.Column="6"/>
+        <TextBlock x:Name="uživatel" Grid.Column="4" HorizontalAlignment="Left" Height="21" Margin="17,10,0,0" TextWrapping="Wrap" Text="Uživatel:" VerticalAlignment="Top" Width="69" IsEnabled="False"/>
+        <TextBlock x:Name="tbl_uzivatel" Grid.Column="4" HorizontalAlignment="Left" Height="21" Margin="17,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" IsEnabled="False" FontSize="16" FontWeight="Bold"/>
     </Grid>
 </Window>
