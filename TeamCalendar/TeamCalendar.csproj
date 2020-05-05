@@ -54,7 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Encryption.cs" />
+    <Compile Include="Encrypce.cs" />
     <Compile Include="Meeting.cs" />
     <Compile Include="Relation.cs" />
     <Compile Include="Storage.cs" />
