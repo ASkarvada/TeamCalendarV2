@@ -21,6 +21,7 @@ namespace TeamCalendar
     {
         public int month;
         public int year;
+        
         public Win_Calendar()
         {
             InitializeComponent();
@@ -148,7 +149,8 @@ namespace TeamCalendar
 
         private void CalendarScreen(DateTime date)
         {
-            //tbl_uzivatel.Text = StorageManager.loggedUser.Name;
+
+            tbl_uzivatel.Text = StorageManager.loggedUser.Name;
 
             foreach (UIElement element in grid1.Children) //povolení všech buttonů
             {
@@ -168,6 +170,16 @@ namespace TeamCalendar
             month = date.Month;
             year = date.Year;
             RenderCallendar(date.Year, date.Month);
+        }
+
+        private void day_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+        }
+
+        private void day(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

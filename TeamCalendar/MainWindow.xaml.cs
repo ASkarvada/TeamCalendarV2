@@ -43,7 +43,8 @@ namespace TeamCalendar
 
                     StorageManager.GetStorage().users.Add(User.Create(tb_reg_jmeno.Text, Encrypce.Start(reg_heslo, true)));
                     MessageBox.Show("Byl jste registrován");
-                   
+
+                    StorageManager.loggedUser = StorageManager.GetStorage().findUserByName(tb_reg_jmeno.Text);
                     Win_Calendar win_cal = new Win_Calendar();
                     win_cal.Show();
                     this.Close();

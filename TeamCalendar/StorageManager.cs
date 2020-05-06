@@ -31,7 +31,7 @@ namespace TeamCalendar
                 System.Xml.Serialization.XmlSerializer reader =
              new System.Xml.Serialization.XmlSerializer(typeof(Storage));
                 StreamReader file = new StreamReader(storagePath);
-                StorageManager.storage = (Storage)reader.Deserialize(file);
+                storage = (Storage)reader.Deserialize(file);
                 file.Close();
             }
             catch
@@ -44,10 +44,7 @@ namespace TeamCalendar
 
         public static void Save()
         {
-
-            System.Xml.Serialization.XmlSerializer writer =
-                new System.Xml.Serialization.XmlSerializer(typeof(Storage));
-
+            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(Storage));
 
             FileStream file = File.Create(storagePath);
             Storage SaveStorage;
