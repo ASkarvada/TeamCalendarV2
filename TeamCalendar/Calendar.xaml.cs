@@ -26,7 +26,6 @@ namespace TeamCalendar
         {
             InitializeComponent();
             CalendarScreen(DateTime.Now);
-
         }
 
        public List<DateTime> FetchDays(int year, int month) //metoda pro generaci (zobrazeného) měsíce
@@ -86,7 +85,7 @@ namespace TeamCalendar
                 var result = (Button)this.FindName(name);
                 
                 result.Content = day.Day;
-                result.Tag = day.Date;
+                result.Tag = day.Date.ToBinary();
 
                 if (day.Day == 1) firstButtonX = x;     //pro vypnutí buttonů (1. cyklus)
                 if(days.Count - day.Day == 0)           //pro vypnutí buttonů (2. cyklus)
@@ -125,12 +124,6 @@ namespace TeamCalendar
 
         }
 
-        public void onBtnClick(Button btn)
-        {
-            DateTime day = DateTime.FromBinary(Convert.ToInt64(btn.Tag));
-            //otevrit okno 
-        }
-
         private void b_sipka_vpred_Click(object sender, RoutedEventArgs e)
         {
             month++;
@@ -149,7 +142,6 @@ namespace TeamCalendar
 
         private void CalendarScreen(DateTime date)
         {
-
             tbl_uzivatel.Text = StorageManager.loggedUser.Name;
 
             foreach (UIElement element in grid1.Children) //povolení všech buttonů
@@ -175,6 +167,8 @@ namespace TeamCalendar
         private void day_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
+            Meeting_win window = new Meeting_win(btn);
+            window.Show();
         }
 
         private void day(object sender, RoutedEventArgs e)

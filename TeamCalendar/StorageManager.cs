@@ -26,19 +26,11 @@ namespace TeamCalendar
 
         private static void Init()
         {
-            try
-            {
                 System.Xml.Serialization.XmlSerializer reader =
              new System.Xml.Serialization.XmlSerializer(typeof(Storage));
                 StreamReader file = new StreamReader(storagePath);
                 storage = (Storage)reader.Deserialize(file);
                 file.Close();
-            }
-            catch
-            {
-                Save();
-                Init();
-            }
 
         }
 

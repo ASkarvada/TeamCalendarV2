@@ -28,7 +28,6 @@ namespace TeamCalendar
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void b_Zaregistrovat_Click(object sender, RoutedEventArgs e)
@@ -86,7 +85,6 @@ namespace TeamCalendar
 
                 }
             }
-
            
         }
 
