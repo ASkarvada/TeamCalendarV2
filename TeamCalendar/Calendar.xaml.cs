@@ -19,8 +19,8 @@ namespace TeamCalendar
     /// </summary>
     public partial class Win_Calendar : Window
     {
-        public int changeOfMonth = 0;
-        public int changeOfYear = 0;
+        public int month;
+        public int year;
         public Win_Calendar()
         {
             InitializeComponent();
@@ -81,7 +81,6 @@ namespace TeamCalendar
                 }
 
                 //Render btn
-                //var result = this.GetType().GetField("day_"+x+"_"+y).GetValue(this);
                 string name = ("day_" + x + "_" + y);
                 var result = (Button)this.FindName(name);
                 
@@ -133,21 +132,17 @@ namespace TeamCalendar
 
         private void b_sipka_vpred_Click(object sender, RoutedEventArgs e)
         {
-            DateTime date;
-            changeOfMonth++;
-            if (DateTime.Now.Month + changeOfMonth > 12)
-            { changeOfYear++; date = new DateTime(DateTime.Now.Year + changeOfYear, 1, DateTime.Now.Day); }
-            date = new DateTime(DateTime.Now.Year + changeOfYear, DateTime.Now.Month + changeOfMonth, DateTime.Now.Day);
+            month++;
+            if (month > 12) { year++; month = 1; }
+            DateTime date = new DateTime(year, month, 1);
             CalendarScreen(date);
         }
 
         private void b_sipka_zpet_Click(object sender, RoutedEventArgs e)
         {
-            DateTime date;
-            changeOfMonth--;
-            if (DateTime.Now.Month + changeOfMonth > 12)
-            { changeOfYear--; date = new DateTime(DateTime.Now.Year + changeOfYear, 1, DateTime.Now.Day); }
-            date = new DateTime(DateTime.Now.Year + changeOfYear, DateTime.Now.Month + changeOfMonth, DateTime.Now.Day);
+            month--;
+            if (month < 1) { year--; month = 12; }
+            DateTime date = new DateTime(year, month, 1);
             CalendarScreen(date);
         }
 
@@ -170,6 +165,8 @@ namespace TeamCalendar
 
             tbl_rok.Text = date.ToString("yyyy");
             tbl_mesic.Text = date.ToString("MMMM");
+            month = date.Month;
+            year = date.Year;
             RenderCallendar(date.Year, date.Month);
         }
     }
