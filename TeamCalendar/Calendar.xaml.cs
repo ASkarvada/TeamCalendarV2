@@ -21,7 +21,7 @@ namespace TeamCalendar
     {
         public int month;
         public int year;
-        
+
         public Win_Calendar()
         {
             InitializeComponent();
@@ -131,6 +131,23 @@ namespace TeamCalendar
             if (month > 12) { year++; month = 1; }
             DateTime date = new DateTime(year, month, 1);
             CalendarScreen(date);
+            DeleteMeetingControl();
+            CreateMeetingControl();
+        }
+
+        private void DeleteMeetingControl()
+        {
+            int x = 0;
+            int y = 0;
+            for (int i = 0; i < 42; i++) //procházení po dnech
+            {
+                string nameSPanel = ("sp_" + x + "_" + y);
+                var resultOfSPanel = (StackPanel)this.FindName(nameSPanel);
+                resultOfSPanel.Children.Clear();
+                
+                x++;
+                if (x == 7) { x = 0; y++; }
+            }
         }
 
         private void b_sipka_zpet_Click(object sender, RoutedEventArgs e)
@@ -139,6 +156,8 @@ namespace TeamCalendar
             if (month < 1) { year--; month = 12; }
             DateTime date = new DateTime(year, month, 1);
             CalendarScreen(date);
+            DeleteMeetingControl();
+            CreateMeetingControl();
         }
 
         private void CalendarScreen(DateTime date)
@@ -170,8 +189,8 @@ namespace TeamCalendar
             Button btn = sender as Button;
             Meeting_win window = new Meeting_win(btn);
             window.Show();
-            window.Closed += new System.EventHandler(this.isClosed);
-            //CalendarScreen(new DateTime(year, month, Convert.ToInt32(btn.Content)));
+            window.b_createMeeting.Click += this.isClosed;
+            
             
         }
 
@@ -185,44 +204,65 @@ namespace TeamCalendar
 
                 foreach (Meeting meetingInMonth in mD) //procházení všech meetingů v měsíci
                 {
-                    
-                    if(meetingInMonth.From.Day == 2)
+                    int x = 0;
+                    int y = 0;
+                    for (int i = 0; i < 42; i++) //procházení po dnech
                     {
-                        System.Windows.Controls.Button newBtn = new Button();
+                        string nameSPanel = ("sp_" + x + "_" + y);
+                        string nameButton = ("day_" + x + "_" + y);
+                        var resultOfSPanel = (StackPanel)this.FindName(nameSPanel);
+                        var resultOfButton = (Button)this.FindName(nameButton);
 
-                        newBtn.Content = meetingInMonth.Name;
-                        newBtn.Name = "Button" + meetingInMonth.Name;
-                        newBtn.Height = 20;
-                        newBtn.Width = 70;
+                        if(resultOfButton.IsEnabled)
+                        {
+                            if (meetingInMonth.From.Day == Convert.ToInt32(resultOfButton.Content)) //ověření zda je schůzka ve dnu
+                            {
+                                bool firstElement = true;
 
-                        sp1.Children.Add(newBtn);
+                                Button newBtn = new Button();
+
+                                newBtn.Content = meetingInMonth.Name;
+                                newBtn.Name = "Button" + meetingInMonth.Name;
+                                newBtn.Tag = meetingInMonth.id;
+                                newBtn.Click += meeting_Click;
+                                newBtn.Height = 20;
+                                newBtn.Width = 70;
+                                newBtn.Background = new SolidColorBrush(Color.FromArgb(meetingInMonth.Color.A,meetingInMonth.Color.R, meetingInMonth.Color.G, meetingInMonth.Color.B));
+
+                                UIElementCollection element = resultOfSPanel.Children;
+                                List<FrameworkElement> lstElement = element.Cast<FrameworkElement>().ToList();
+                                var lstControl = lstElement.OfType<Control>();
+
+                                foreach (Control contol in lstControl)
+                                {
+                                    if (Convert.ToString(contol.Tag) == Convert.ToString(meetingInMonth.id))
+                                    {
+                                        firstElement = false;
+                                    }
+                                }
+
+                                if(firstElement)
+                                {
+                                    resultOfSPanel.Children.Add(newBtn);
+                                }
+                            }
+                        }
+
+                        x++;
+                        if(x == 7) { x = 0; y++; }
                     }
-                    
-
-
-
-                    //int x = 0;
-                    //int y = 0;
-                    //for (int i = 0; i < 42; i++)
-                    //{
-                    //    string name = "day_" + x + "_" + y;
-                    //    var result = (Button)this.FindName(name);
-                    //    if (result.Content == btn.Tag)
-                    //    {
-                    //        btn.Height = 20;
-                    //        btn.Margin = new Thickness(10, 30, 10, 10);
-                    //        Grid.SetColumn(btn, x);
-                    //    }
-                    //    x++;
-                    //    if (x == 7) { x = 0; y++; }
-                    //}
                 }
             }
         }
 
-        public void isClosed(object sender, EventArgs e)
+        public void isClosed(object sender, RoutedEventArgs e)
         {
             CreateMeetingControl();
+        }
+
+        public void meeting_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
     }

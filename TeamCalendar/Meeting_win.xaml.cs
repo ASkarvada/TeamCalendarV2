@@ -72,9 +72,6 @@ namespace TeamCalendar
             StorageManager.Save();
             this.Close();
             System.Windows.MessageBox.Show("Meeting vytvořen");
-            //Win_Calendar win = new Win_Calendar();
-            //win.CreateMeetingControl();
-
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -84,7 +81,7 @@ namespace TeamCalendar
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
