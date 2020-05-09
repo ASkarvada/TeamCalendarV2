@@ -38,5 +38,22 @@ namespace TeamCalendar
 
             return meeting;
         }
+
+        public bool isMain()
+        {
+            return (this.CreatedBy.id == StorageManager.loggedUser.id);
+        }
+
+        public bool isInvited()
+        {
+            foreach(Relation<User> user in InvitedUser)
+            {
+                if(user.id == StorageManager.loggedUser.id)
+                {
+                    return true;
+                }
+            }
+            return false; 
+        }
     }
 }

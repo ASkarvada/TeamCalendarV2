@@ -26,6 +26,7 @@ namespace TeamCalendar
         {
             InitializeComponent();
             CalendarScreen(DateTime.Now);
+            CreateMeetingControl();
         }
 
        public List<DateTime> FetchDays(int year, int month) //metoda pro generaci (zobrazeného) měsíce
@@ -169,12 +170,61 @@ namespace TeamCalendar
             Button btn = sender as Button;
             Meeting_win window = new Meeting_win(btn);
             window.Show();
+            window.Closed += new System.EventHandler(this.isClosed);
+            //CalendarScreen(new DateTime(year, month, Convert.ToInt32(btn.Content)));
+            
         }
 
-        private void day(object sender, RoutedEventArgs e)
+        public void CreateMeetingControl()
         {
+            List<DateTime> days = FetchDays(year, month);
+            foreach (DateTime day in days) //procházení všech dní v měsíci
+            {
+                //Relation<Meeting> meeting = new Relation<Meeting>();
+                List<Meeting> mD = StorageManager.GetStorage().findMeetingByInvitedByDate(day);
 
+                foreach (Meeting meetingInMonth in mD) //procházení všech meetingů v měsíci
+                {
+                    
+                    if(meetingInMonth.From.Day == 2)
+                    {
+                        System.Windows.Controls.Button newBtn = new Button();
+
+                        newBtn.Content = meetingInMonth.Name;
+                        newBtn.Name = "Button" + meetingInMonth.Name;
+                        newBtn.Height = 20;
+                        newBtn.Width = 70;
+
+                        sp1.Children.Add(newBtn);
+                    }
+                    
+
+
+
+                    //int x = 0;
+                    //int y = 0;
+                    //for (int i = 0; i < 42; i++)
+                    //{
+                    //    string name = "day_" + x + "_" + y;
+                    //    var result = (Button)this.FindName(name);
+                    //    if (result.Content == btn.Tag)
+                    //    {
+                    //        btn.Height = 20;
+                    //        btn.Margin = new Thickness(10, 30, 10, 10);
+                    //        Grid.SetColumn(btn, x);
+                    //    }
+                    //    x++;
+                    //    if (x == 7) { x = 0; y++; }
+                    //}
+                }
+            }
         }
+
+        public void isClosed(object sender, EventArgs e)
+        {
+            CreateMeetingControl();
+        }
+
     }
 
 }

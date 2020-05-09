@@ -30,6 +30,26 @@ namespace TeamCalendar
             return null;
         }
 
+        public List<Meeting> findMeetingByInvitedByDate(DateTime date)
+        {
+            List<Meeting> result = new List<Meeting>();
+            foreach(Meeting meeting in meetings)
+            {
+                if (meeting.isInvited() || meeting.isMain())
+                {
+                    if(
+                        meeting.From.Year <= date.Year && meeting.To.Year >= date.Year
+                        && meeting.From.Month <= date.Month && meeting.To.Month >= date.Month
+                        && meeting.From.Day <= date.Day && meeting.To.Day >= date.Day
+                      )
+                    {
+                        result.Add(meeting);
+                    }
+                }
+            }
+            return result;
+        }
+
         public T findById<T>(Guid id) where T : Type
         {
             if (typeof(T) == typeof(User))

@@ -41,33 +41,12 @@ namespace TeamCalendar
 
         private void lb_people_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if(selectedUsers.Count == 0)
+            string selectedPerson = lb_people.SelectedItem.ToString();
+            if (StorageManager.loggedUser.Name != selectedPerson)
             {
-                if (StorageManager.loggedUser != StorageManager.GetStorage().findUserByName(Convert.ToString(lb_people.SelectedItem)))
-                {
-                    
-                    selectedUsers.Add(
-                        Relation<User>.Create(StorageManager.GetStorage().findUserByName(Convert.ToString(lb_people.SelectedItem)))
-                        );
-                    tb_people.Text += lb_people.SelectedItem;
-                    tb_people.Text += "; ";
-                }
-            }
-            foreach (Relation<User> userRelation in selectedUsers)
-            {
-                User item = userRelation.Get();
-
-                if(item != StorageManager.GetStorage().findUserByName(Convert.ToString(lb_people.SelectedItem)))
-                {
-                    if(StorageManager.loggedUser != StorageManager.GetStorage().findUserByName(Convert.ToString(lb_people.SelectedItem)))
-                    {
-                        selectedUsers.Add(
-                           Relation<User>.Create(StorageManager.GetStorage().findUserByName(Convert.ToString(lb_people.SelectedItem)))
-                           );
-                        tb_people.Text += lb_people.SelectedItem;
-                        tb_people.Text += "; ";
-                    }
-                }
+                List<string> list = tb_people.Text.Split(' ').ToList();
+                list.Add(selectedPerson);
+                tb_people.Text = String.Join(" ", list.Distinct().ToList().ToArray());
             }
             
         }
@@ -91,8 +70,20 @@ namespace TeamCalendar
 
             StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, selectedUsers, tb_place.Text, color, from, to, StorageManager.loggedUser));
             StorageManager.Save();
-
+            this.Close();
             System.Windows.MessageBox.Show("Meeting vytvořen");
+            //Win_Calendar win = new Win_Calendar();
+            //win.CreateMeetingControl();
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
             
         }
     }
