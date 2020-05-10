@@ -28,6 +28,7 @@ namespace TeamCalendar
             InitializeComponent();
 
             meet = StorageManager.GetStorage().findById<Meeting>(new Guid(id));
+
             tb_nazevSch.Text = meet.Name;
             tb_od_h.Text = Convert.ToString(meet.From.Hour);
             tb_od_m.Text = Convert.ToString(meet.From.Minute);
@@ -37,15 +38,16 @@ namespace TeamCalendar
             dp_od.SelectedDate = meet.From.Date;
             dp_do.SelectedDate = meet.To.Date;
             b_color.Background = new SolidColorBrush(Color.FromArgb(meet.Color.A, meet.Color.R, meet.Color.G, meet.Color.B));
+            color = meet.Color;
             tbl_createdBy.Text = StorageManager.GetStorage().findById<User>(meet.CreatedBy.id).Name;
-
+            
             foreach (User item in meet.AgreedByUser)
             {
-                tb_agreed.Text += item.Name;
+                tb_agreed.Text += " " + item.Name;
             }
             foreach (User item in meet.RejectedByUser)
             {
-                tb_rejected.Text += item.Name;
+                tb_rejected.Text += " " + item.Name;
             }
 
             List<User> users = StorageManager.GetStorage().users;
@@ -73,49 +75,86 @@ namespace TeamCalendar
 
         private void b_reject_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in meet.RejectedByUser)
+            List<User> rejectedUserClone = meet.RejectedByUser.GetRange(0, meet.RejectedByUser.Count);
+
+            for (int i = 0; i < rejectedUserClone.Count; i++)
             {
-                if (item != StorageManager.loggedUser)
+                User item = rejectedUserClone[i];
+
+                if (item.id != StorageManager.loggedUser.id)
                 {
-                    meet.RejectedByUser.Add(StorageManager.loggedUser);
+                    if (!meet.RejectedByUser.Contains(item))
+                    {
+                        meet.RejectedByUser.Add(StorageManager.loggedUser);
+                    }
+
                 }
-                else
-                {
-                    meet.AgreedByUser.Remove(item);
-                    meet.RejectedByUser.Add(StorageManager.loggedUser);
-                }
+                //else
+                //{
+                //    meet.RejectedByUser.Remove(item);
+                //    meet.AgreedByUser.Add(StorageManager.loggedUser);
+                //}
             }
-            string s = "";
-            foreach (var item in meet.RejectedByUser)
-            {
-                s += " " + item;
-            }
-            tb_rejected.Text = s;
+
+
+            StorageManager.GetStorage().UpdateMeeting(meet);
+            StorageManager.Save();
+
+
             this.Close();
+
+
+
+            //foreach (var item in meet.RejectedByUser)
+            //{
+            //    if (item != StorageManager.loggedUser)
+            //    {
+            //        meet.RejectedByUser.Add(StorageManager.loggedUser);
+            //    }
+            //    else
+            //    {
+            //        meet.AgreedByUser.Remove(item);
+            //        meet.RejectedByUser.Add(StorageManager.loggedUser);
+            //    }
+            //}
+            //string s = "";
+            //foreach (var item in meet.RejectedByUser)
+            //{
+            //    s += " " + item;
+            //}
+            //tb_rejected.Text = s;
+            //this.Close();
 
         }
 
         private void b_agree_Click(object sender, RoutedEventArgs e)
         {
-            //OPRAVIT
-            foreach (var item in meet.AgreedByUser)
+            List<User> agreedUserClone = meet.AgreedByUser.GetRange(0, meet.AgreedByUser.Count);
+
+            for (int i = 0; i < agreedUserClone.Count; i++)
             {
-                if (item != StorageManager.loggedUser)
+                User item = agreedUserClone[i];
+
+                if (item.id != StorageManager.loggedUser.id)
                 {
-                    meet.AgreedByUser.Add(StorageManager.loggedUser);
+                    if(!meet.AgreedByUser.Contains(item))
+                    {
+                        meet.AgreedByUser.Add(StorageManager.loggedUser);
+                    }
+                    
                 }
-                else
-                {
-                    meet.RejectedByUser.Remove(item);
-                    meet.AgreedByUser.Add(StorageManager.loggedUser);
-                }
+                //else
+                //{
+                //    meet.RejectedByUser.Remove(item);
+                //    meet.AgreedByUser.Add(StorageManager.loggedUser);
+                //}
             }
-            string s = "";
-            foreach (var item in meet.AgreedByUser)
-            {
-                s += " " + item;
-            }
-            tb_agreed.Text = s;
+
+
+            StorageManager.GetStorage().UpdateMeeting(meet);
+            StorageManager.Save();
+
+
             this.Close();
         }
 
@@ -132,25 +171,45 @@ namespace TeamCalendar
 
         private void b_upravit_Click(object sender, RoutedEventArgs e)
         {
-            //Princip nahrazení
+
+            if(CreatingMeeting.DateCheck(tb_od_h.Text, tb_od_m.Text, tb_do_h.Text, tb_do_m.Text))
+            {
+                //ohlídat
+                DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
+                DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
+
+                meet.Name = tb_nazevSch.Text;
+                meet.InvitedUser = CreatingMeeting.loadInvitedUsers(tb_people.Text);
+                meet.Misto = tb_place.Text;
+                meet.Color = color;
+                meet.From = from;
+                meet.To = to;
+                meet.CreatedBy = meet.CreatedBy;
+                meet.AgreedByUser = meet.AgreedByUser;
+                meet.RejectedByUser = meet.RejectedByUser;
 
 
-            //DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
-            //DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
+                StorageManager.GetStorage().UpdateMeeting(meet);
+                StorageManager.Save();
+                this.Close();
+                System.Windows.MessageBox.Show("Meeting upraven");
+            }
 
-            //List<Relation<User>> agreedByUser = new List<Relation<User>>();
-            //List<Relation<User>> rejectedByUser = new List<Relation<User>>();
-
-            //StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, Meeting_win.loadInvitedUsers(tb_people.Text), tb_place.Text, color, from, to, StorageManager.loggedUser, agreedByUser, rejectedByUser));
-            //StorageManager.Save();
-            //this.Close();
-            //System.Windows.MessageBox.Show("Meeting vytvořen");
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            StorageManager.GetStorage().meetings.Add(Meeting.Create(meet.Name, meet.InvitedUser, meet.Misto, meet.Color, meet.From, meet.To, StorageManager.GetStorage().findById<User>(meet.CreatedBy.id), meet.AgreedByUser, meet.RejectedByUser));
-            //StorageManager.Save();
+            
+            
+        }
+
+        private void b_odstranit_Click(object sender, RoutedEventArgs e)
+        {
+            StorageManager.GetStorage().DeleteMeeting(meet);
+            StorageManager.Save();
+            this.Close();
+            System.Windows.MessageBox.Show("Meeting odstraněn");
         }
     }
 }

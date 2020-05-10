@@ -99,6 +99,29 @@ namespace TeamCalendar
             }
             return vysledky;
         }
+
+        public void UpdateMeeting(Meeting meeting)
+        {
+            for (int i = meetings.Count - 1; i >= 0; i--)
+            {
+                if (meetings[i].id == meeting.id)
+                {
+                    meetings.RemoveAt(i);
+                }
+            }
+            meetings.Add(meeting);
+        }
+
+        public void DeleteMeeting(Meeting meeting)
+        {
+            for (int i = meetings.Count - 1; i >= 0; i--)
+            {
+                if (meetings[i].id == meeting.id)
+                {
+                    meetings.RemoveAt(i);
+                }
+            }
+        }
     }
     
 

@@ -28,7 +28,7 @@ namespace TeamCalendar
             if (chyby != "") System.Windows.MessageBox.Show(chyby);
         }
 
-        public static void DateCheck(string od_h, string od_m, string do_h, string do_m)
+        public static bool DateCheck(string od_h, string od_m, string do_h, string do_m)
         {
             string chyby = "";
             int[] hodiny = { 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 };
@@ -44,7 +44,13 @@ namespace TeamCalendar
             if (!lminuty.Contains(Int32.Parse(od_m))) chyby += "Špatný formát data - od (minuty)\n";
             if (!lminuty.Contains(Int32.Parse(do_m))) chyby += "Špatné formát data - do (minuty)\n";
 
-            if (chyby != "") System.Windows.MessageBox.Show(chyby);
+            if (chyby != "") { System.Windows.MessageBox.Show(chyby); return false; }
+            else
+            {
+                return true;
+            }
+
+
         }
 
         public static List<Relation<User>> loadInvitedUsers(string loadString)

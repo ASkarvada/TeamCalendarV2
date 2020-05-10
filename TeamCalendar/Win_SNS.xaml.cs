@@ -76,23 +76,40 @@ namespace TeamCalendar
             cannotTo = cannotTo.OrderBy(x => x.TimeOfDay).ToList();
 
             DateTime dtNow = DateTime.Now;
+            if (dtNow.Hour > 20) { dtNow = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day + 1, 8, 0, 0); }
+            if (dtNow.Hour < 8) { dtNow = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 8, 0, 0); }
             TimeSpan ts = new TimeSpan(Int32.Parse(tb_h.Text), Int32.Parse(tb_m.Text), 0);
 
             if (dtNow.Hour <= 8 && dtNow.Hour >= 20) dtNow = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day + 1, 8, 0, 0);
 
-            //asi tohle je zle
-            for (int i = 0; i < cannotFrom.Count; i++)
+            List<DateTime> dtList = Win_Calendar.FetchDays(dtNow.Year, dtNow.Month);
+
+            foreach (var item in dtList) //procházení dnů v měsíci
             {
-                int res = DateTime.Compare(dtNow, cannotTo[i]);
-                if (res == -1)
+                List<Meeting> listOfMeetingsInDay = StorageManager.GetStorage().FindMeetingsByDate(item);
+                listOfMeetingsInDay = listOfMeetingsInDay.OrderBy(x => x.From.TimeOfDay).ToList();
+
+                for (int i = 0; i < listOfMeetingsInDay.Count; i++)
                 {
-                    DateTime maybe = dtNow + ts;
-                    int res2 = DateTime.Compare(maybe, cannotFrom[i + 1]);
-                    if (res2 == -1)
+                    DateTime sum = dtNow + ts;
+
+                    
+                    if (cannotFrom.Contains(listOfMeetingsInDay[i].From))
                     {
-                        return maybe - ts;
+                        DateTime cannot1 = listOfMeetingsInDay[i].To;
+                        DateTime cannot2 = listOfMeetingsInDay[i+1].From;
+                        TimeSpan betweenMeetings = cannot2 - cannot1;
+
+                        
+                        if (betweenMeetings >= ts)
+                        {
+                            dtNow = cannot1;
+                            return dtNow;
+                        }
+
                     }
                 }
+                
             }
 
             return new DateTime(2020, 5, 20, 20, 20, 20);
