@@ -29,9 +29,8 @@ namespace TeamCalendar
             CreateMeetingControl();
         }
 
-       public List<DateTime> FetchDays(int year, int month) //metoda pro generaci (zobrazeného) měsíce
+        public List<DateTime> FetchDays(int year, int month) //metoda pro generaci (zobrazeného) měsíce
         {
-            
             List<DateTime> result = new List<DateTime>();
             for (int i = 1; i <= DateTime.DaysInMonth(year,month); i++)
             {
@@ -190,8 +189,6 @@ namespace TeamCalendar
             Meeting_win window = new Meeting_win(btn);
             window.Show();
             window.b_createMeeting.Click += this.isClosed;
-            
-            
         }
 
         public void CreateMeetingControl()
@@ -223,7 +220,7 @@ namespace TeamCalendar
 
                                 newBtn.Content = meetingInMonth.Name;
                                 newBtn.Name = "Button" + meetingInMonth.Name;
-                                newBtn.Tag = meetingInMonth.id;
+                                newBtn.Tag = meetingInMonth.id.ToString();
                                 newBtn.Click += meeting_Click;
                                 newBtn.Height = 20;
                                 newBtn.Width = 70;
@@ -262,9 +259,17 @@ namespace TeamCalendar
 
         public void meeting_Click(object sender, RoutedEventArgs e)
         {
-            
+            Button btn = sender as Button;
+            Win_DetailOfMeeting window = new Win_DetailOfMeeting(btn.Tag.ToString());
+            window.Show();
         }
 
+        private void b_SNS_Click(object sender, RoutedEventArgs e)
+        {
+            Win_SNS sns = new Win_SNS();
+            sns.Show();
+            sns.b_createMeeting.Click += this.isClosed;
+        }
     }
 
 }

@@ -23,8 +23,10 @@ namespace TeamCalendar
         public DateTime To { get; set; }
 
         public Relation<User> CreatedBy { get; set; }
+        public List<User> AgreedByUser { get; set; }
+        public List<User> RejectedByUser { get; set; }
 
-        public static Meeting Create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy)
+        public static Meeting Create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy, List<User> agreedByUser, List<User> rejectedByUser)
         {
             Meeting meeting = new Meeting();
 
@@ -35,6 +37,8 @@ namespace TeamCalendar
             meeting.From = from;
             meeting.To = to;
             meeting.CreatedBy = Relation<User>.Create(createdBy);
+            meeting.AgreedByUser = agreedByUser;
+            meeting.RejectedByUser = rejectedByUser;
 
             return meeting;
         }
@@ -46,14 +50,26 @@ namespace TeamCalendar
 
         public bool isInvited()
         {
-            foreach(Relation<User> user in InvitedUser)
+            foreach (Relation<User> user in InvitedUser)
             {
-                if(user.id == StorageManager.loggedUser.id)
+                if (user.id == StorageManager.loggedUser.id)
                 {
                     return true;
                 }
             }
-            return false; 
+            return false;
+        }
+
+        public bool isInvitedSNS(Guid id)
+        {
+            foreach (Relation<User> user in InvitedUser)
+            {
+                if (user.id == id)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

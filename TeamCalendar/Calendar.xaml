@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="b_sipka_zpet" Content="&lt;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="93" Height="50" Grid.Row="0" Grid.Column="0" FontSize="22" Click="b_sipka_zpet_Click"/>
         <Button x:Name="b_sipka_vpred" Content="&gt;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="93" Height="50" Grid.Row="0" Grid.Column="3" IsCancel="True" FontSize="22" Click="b_sipka_vpred_Click"/>
-        <Button x:Name="b_SNS" Content="Sjednat nejbližší schůzku" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="206" Height="50" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" FontSize="16"/>
+        <Button x:Name="b_SNS" Content="Sjednat nejbližší schůzku" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="206" Height="50" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" FontSize="16" Click="b_SNS_Click"/>
         <TextBlock x:Name="tbl_mesic" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="10,19,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="94" FontSize="24" TextAlignment="Right"/>
         <TextBlock x:Name="tbl_rok" Grid.Column="2" HorizontalAlignment="Left" Height="33" Margin="10,19,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="93" FontSize="24"/>
         <TextBlock x:Name="pondeli" HorizontalAlignment="Left" Height="20" Margin="10,9,0,0" TextWrapping="Wrap" Text="Pondělí" VerticalAlignment="Top" Width="93" Grid.Row="1" FontSize="18" TextAlignment="Center"/>

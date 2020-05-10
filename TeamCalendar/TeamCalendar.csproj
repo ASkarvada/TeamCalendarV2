@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreatingMeeting.cs" />
     <Compile Include="Encrypce.cs" />
     <Compile Include="Meeting.cs" />
     <Compile Include="Meeting_win.xaml.cs">
@@ -69,6 +70,12 @@
     <Compile Include="User.cs" />
     <Compile Include="Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win_DetailOfMeeting.xaml.cs">
+      <DependentUpon>Win_DetailOfMeeting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win_SNS.xaml.cs">
+      <DependentUpon>Win_SNS.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +94,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Meeting_win.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_DetailOfMeeting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_SNS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

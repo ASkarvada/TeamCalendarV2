@@ -24,10 +24,13 @@ namespace TeamCalendar
         public string reg_heslo { get; set; }
         public string reg_hesloZnovu { get; set; }
         public string login_heslo { get; set; }
+
+        private bool successful_log_reg { get; set; }
         
         public MainWindow()
         {
             InitializeComponent();
+            successful_log_reg = false;
         }
 
         private void b_Zaregistrovat_Click(object sender, RoutedEventArgs e)
@@ -46,6 +49,7 @@ namespace TeamCalendar
                     StorageManager.loggedUser = StorageManager.GetStorage().findUserByName(tb_reg_jmeno.Text);
                     Win_Calendar win_cal = new Win_Calendar();
                     win_cal.Show();
+                    successful_log_reg = true;
                     this.Close();
 
                 }
@@ -77,6 +81,7 @@ namespace TeamCalendar
                     StorageManager.loggedUser = user;
                     Win_Calendar win_cal = new Win_Calendar();
                     win_cal.Show();
+                    successful_log_reg = true;
                     this.Close();
                 }
                 else
@@ -90,7 +95,10 @@ namespace TeamCalendar
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            StorageManager.Save();
+            if(successful_log_reg)
+            {
+                StorageManager.Save();
+            }
         }
     }
 }

@@ -20,8 +20,8 @@ namespace TeamCalendar
     /// </summary>
     public partial class Meeting_win : Window
     {
-        List<Relation<User>> selectedUsers = new List<Relation<User>>();
-        Color color;
+        
+        Color color { get; set; }
 
         public Meeting_win(System.Windows.Controls.Button btn)
         {
@@ -36,7 +36,9 @@ namespace TeamCalendar
             {
                 lb_people.Items.Add(item.Name);
             }
-            
+
+            color = Color.FromArgb(100, 221, 221, 221);
+
         }
 
         private void lb_people_MouseUp(object sender, MouseButtonEventArgs e)
@@ -48,7 +50,6 @@ namespace TeamCalendar
                 list.Add(selectedPerson);
                 tb_people.Text = String.Join(" ", list.Distinct().ToList().ToArray());
             }
-            
         }
 
         private void b_color_Click(object sender, RoutedEventArgs e)
@@ -63,16 +64,23 @@ namespace TeamCalendar
 
         private void b_createMeeting_Click(object sender, RoutedEventArgs e)
         {
-            DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Convert.ToInt32(tb_od_h.Text), Convert.ToInt32(tb_od_m.Text), 0);
-            DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Convert.ToInt32(tb_do_h.Text), Convert.ToInt32(tb_do_m.Text), 0);
+            CreatingMeeting.DateCheck(tb_od_h.Text, tb_od_m.Text, tb_do_h.Text, tb_do_m.Text);
 
-            //Relation
+            DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
+            DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
 
-            StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, selectedUsers, tb_place.Text, color, from, to, StorageManager.loggedUser));
+            List<User> agreedByUser = new List<User>();
+            agreedByUser.Add(StorageManager.loggedUser);
+            List<User> rejectedByUser = new List<User>();
+
+            StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, CreatingMeeting.loadInvitedUsers(tb_people.Text), tb_place.Text, color, from, to, StorageManager.loggedUser, agreedByUser, rejectedByUser));
+            
             StorageManager.Save();
             this.Close();
             System.Windows.MessageBox.Show("Meeting vytvořen");
         }
+
+        
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
