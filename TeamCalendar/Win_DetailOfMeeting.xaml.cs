@@ -107,30 +107,6 @@ namespace TeamCalendar
             StorageManager.Save();
 
             this.Close();
-
-            //List<User> agreedUserClone = meet.AgreedByUser.GetRange(0, meet.AgreedByUser.Count);
-            //List<User> rejectedUserClone = meet.AgreedByUser.GetRange(0, meet.RejectedByUser.Count);
-
-            //if (!rejectedUserClone.Contains(StorageManager.loggedUser)) //pokud ještě nejsem v listu
-            //{
-            //    meet.RejectedByUser.Add(StorageManager.loggedUser);
-            //    if (agreedUserClone.Contains(StorageManager.loggedUser))
-            //    {
-            //        meet.AgreedByUser.Remove(StorageManager.loggedUser);
-            //        meet.AgreedByUser.Remove(StorageManager.loggedUser);
-
-            //        if (agreedUserClone.Contains(StorageManager.loggedUser))
-            //        {
-            //            meet.AgreedByUser.Remove(StorageManager.loggedUser);
-            //        }
-            //    }
-            //}
-
-            //StorageManager.GetStorage().UpdateMeeting(meet);
-            //StorageManager.Save();
-
-
-            //this.Close();
         }
 
         private void b_agree_Click(object sender, RoutedEventArgs e)

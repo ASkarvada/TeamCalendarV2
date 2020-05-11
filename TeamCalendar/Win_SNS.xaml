@@ -10,6 +10,7 @@
         <TextBlock HorizontalAlignment="Left" Height="36" Margin="38,14,0,0" TextWrapping="Wrap" Text="Název schůzky:" VerticalAlignment="Top" Width="142" FontSize="20"/>
         <TextBox x:Name="tb_nazevSch" HorizontalAlignment="Left" Height="35" Margin="199,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146" FontSize="18"/>
         <TextBox x:Name="tb_h" HorizontalAlignment="Left" Height="39" Margin="203,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontSize="18" TextAlignment="Center"/>
+        <TextBox x:Name="tb_m" HorizontalAlignment="Left" Height="39" Margin="274,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontSize="18" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Height="30" Margin="44,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="124" FontSize="20" TextAlignment="Center"><Run Text="Doba trv"/><Run Text="ání"/><Run Text=":"/></TextBlock>
         <ListBox x:Name="lb_people" HorizontalAlignment="Left" Height="25" Margin="22,172,0,0" VerticalAlignment="Top" Width="247" MouseUp="lb_people_MouseUp"/>
         <TextBlock Height="20" Margin="22,147,0,0" TextWrapping="Wrap" Text="Vyberte spoluúčastníky:" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="167"/>
@@ -19,7 +20,6 @@
         <TextBlock Height="20" Margin="23,357,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="139"><Run Text="Vyberte barvu:"/><LineBreak/><Run/></TextBlock>
         <Button x:Name="b_color" Content="" HorizontalAlignment="Left" Margin="22,384,0,0" VerticalAlignment="Top" Width="105" Height="29" Click="b_color_Click"/>
         <Button x:Name="b_createMeeting" Content="Vytvořit&#xA;schůzku" HorizontalAlignment="Left" Margin="242,357,0,0" VerticalAlignment="Top" Width="114" Height="56" FontSize="16" Click="b_createMeeting_Click"/>
-        <TextBox x:Name="tb_m" HorizontalAlignment="Left" Height="39" Margin="274,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontSize="18" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Height="30" Margin="249,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="20" TextAlignment="Center" Text=":"/>
 
     </Grid>

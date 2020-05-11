@@ -87,26 +87,38 @@ namespace TeamCalendar
             foreach (var item in dtList) //procházení dnů v měsíci
             {
                 List<Meeting> listOfMeetingsInDay = StorageManager.GetStorage().FindMeetingsByDate(item);
-                listOfMeetingsInDay = listOfMeetingsInDay.OrderBy(x => x.From.TimeOfDay).ToList();
+                listOfMeetingsInDay = listOfMeetingsInDay.OrderBy(o => o.From).ToList();
+
+                DateTime sum = dtNow + ts;
 
                 for (int i = 0; i < listOfMeetingsInDay.Count; i++)
                 {
-                    DateTime sum = dtNow + ts;
-
-                    
-                    if (cannotFrom.Contains(listOfMeetingsInDay[i].From))
+                    if (dtNow <= listOfMeetingsInDay[i].From)
                     {
-                        DateTime cannot1 = listOfMeetingsInDay[i].To;
-                        DateTime cannot2 = listOfMeetingsInDay[i+1].From;
-                        TimeSpan betweenMeetings = cannot2 - cannot1;
 
-                        
-                        if (betweenMeetings >= ts)
+                        if (listOfMeetingsInDay[i].From.Hour > sum.Hour) //pokud nejdřívější meeting začne později než by skončil náš spontální
                         {
-                            dtNow = cannot1;
-                            return dtNow;
+                            return sum;
                         }
+                        else
+                        {
 
+                            if (cannotFrom.Contains(listOfMeetingsInDay[i].From))
+                            {
+                                DateTime cannot1 = listOfMeetingsInDay[i].To;
+                                DateTime cannot2 = listOfMeetingsInDay[i + 1].From;
+                                TimeSpan betweenMeetings = cannot2 - cannot1;
+
+
+                                if (betweenMeetings >= ts)
+                                {
+                                    dtNow = cannot1;
+                                    return dtNow;
+                                }
+
+                            }
+
+                        }
                     }
                 }
                 
