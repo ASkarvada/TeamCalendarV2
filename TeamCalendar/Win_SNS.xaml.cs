@@ -38,11 +38,11 @@ namespace TeamCalendar
         {
             CreatingMeeting.DateCheckSNS(tb_h.Text, tb_m.Text);
 
-            List<User> agreedByUser = new List<User>();
-            agreedByUser.Add(StorageManager.loggedUser);
-            List<User> rejectedByUser = new List<User>();
-
             DateTime from = FromTo();
+
+            List<Relation<User>> agreedByUser = new List<Relation<User>>();
+            agreedByUser.Add(Relation<User>.Create(StorageManager.GetStorage().findUserByName(StorageManager.loggedUser.Name)));
+            List<Relation<User>> rejectedByUser = new List<Relation<User>>();
 
             StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, CreatingMeeting.loadInvitedUsers(tb_people.Text), tb_place.Text, color, from, from + new TimeSpan(Int32.Parse(tb_h.Text), Int32.Parse(tb_m.Text), 0), StorageManager.loggedUser, agreedByUser, rejectedByUser));
 

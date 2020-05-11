@@ -23,10 +23,10 @@ namespace TeamCalendar
         public DateTime To { get; set; }
 
         public Relation<User> CreatedBy { get; set; }
-        public List<User> AgreedByUser { get; set; }
-        public List<User> RejectedByUser { get; set; }
+        public List<Relation<User>> AgreedByUser { get; set; }
+        public List<Relation<User>> RejectedByUser { get; set; }
 
-        public static Meeting Create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy, List<User> agreedByUser, List<User> rejectedByUser)
+        public static Meeting Create(string name, List<Relation<User>> invitedUser, string misto, Color color, DateTime from, DateTime to, User createdBy, List<Relation<User>> agreedByUser, List<Relation<User>> rejectedByUser)
         {
             Meeting meeting = new Meeting();
 

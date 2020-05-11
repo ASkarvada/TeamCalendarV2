@@ -41,13 +41,14 @@ namespace TeamCalendar
             color = meet.Color;
             tbl_createdBy.Text = StorageManager.GetStorage().findById<User>(meet.CreatedBy.id).Name;
             
-            foreach (User item in meet.AgreedByUser)
+            
+            foreach (Relation<User> user in meet.AgreedByUser)
             {
-                tb_agreed.Text += " " + item.Name;
+                tb_agreed.Text += " " + user.Get().Name;
             }
-            foreach (User item in meet.RejectedByUser)
+            foreach (Relation<User> user in meet.RejectedByUser)
             {
-                tb_rejected.Text += " " + item.Name;
+                tb_rejected.Text += " " + user.Get().Name;
             }
 
             List<User> users = StorageManager.GetStorage().users;
@@ -75,85 +76,96 @@ namespace TeamCalendar
 
         private void b_reject_Click(object sender, RoutedEventArgs e)
         {
-            List<User> rejectedUserClone = meet.RejectedByUser.GetRange(0, meet.RejectedByUser.Count);
-
-            for (int i = 0; i < rejectedUserClone.Count; i++)
+            Relation<User> rel = new Relation<User>();
+            bool bool1 = true;
+            foreach (Relation<User> user in meet.RejectedByUser)
             {
-                User item = rejectedUserClone[i];
-
-                if (item.id != StorageManager.loggedUser.id)
+                if (user.Get().Name == StorageManager.loggedUser.Name) //pokud ještě nejsem v listu
                 {
-                    if (!meet.RejectedByUser.Contains(item))
-                    {
-                        meet.RejectedByUser.Add(StorageManager.loggedUser);
-                    }
-
+                    bool1 = false;
                 }
-                //else
-                //{
-                //    meet.RejectedByUser.Remove(item);
-                //    meet.AgreedByUser.Add(StorageManager.loggedUser);
-                //}
             }
-
+            if (bool1)
+            {
+                meet.RejectedByUser.Add(Relation<User>.Create(StorageManager.GetStorage().findUserByName(StorageManager.loggedUser.Name)));
+            }
+            bool bool2 = false;
+            foreach (Relation<User> user in meet.AgreedByUser)
+            {
+                if (user.Get().Name == StorageManager.loggedUser.Name) //pokud jsem v opačném listu
+                {
+                    bool2 = true;
+                    rel = user;
+                }
+            }
+            if (bool2)
+            {
+                meet.AgreedByUser.Remove(rel);
+            }
 
             StorageManager.GetStorage().UpdateMeeting(meet);
             StorageManager.Save();
 
-
             this.Close();
 
+            //List<User> agreedUserClone = meet.AgreedByUser.GetRange(0, meet.AgreedByUser.Count);
+            //List<User> rejectedUserClone = meet.AgreedByUser.GetRange(0, meet.RejectedByUser.Count);
 
-
-            //foreach (var item in meet.RejectedByUser)
+            //if (!rejectedUserClone.Contains(StorageManager.loggedUser)) //pokud ještě nejsem v listu
             //{
-            //    if (item != StorageManager.loggedUser)
+            //    meet.RejectedByUser.Add(StorageManager.loggedUser);
+            //    if (agreedUserClone.Contains(StorageManager.loggedUser))
             //    {
-            //        meet.RejectedByUser.Add(StorageManager.loggedUser);
-            //    }
-            //    else
-            //    {
-            //        meet.AgreedByUser.Remove(item);
-            //        meet.RejectedByUser.Add(StorageManager.loggedUser);
+            //        meet.AgreedByUser.Remove(StorageManager.loggedUser);
+            //        meet.AgreedByUser.Remove(StorageManager.loggedUser);
+
+            //        if (agreedUserClone.Contains(StorageManager.loggedUser))
+            //        {
+            //            meet.AgreedByUser.Remove(StorageManager.loggedUser);
+            //        }
             //    }
             //}
-            //string s = "";
-            //foreach (var item in meet.RejectedByUser)
-            //{
-            //    s += " " + item;
-            //}
-            //tb_rejected.Text = s;
+
+            //StorageManager.GetStorage().UpdateMeeting(meet);
+            //StorageManager.Save();
+
+
             //this.Close();
-
         }
 
         private void b_agree_Click(object sender, RoutedEventArgs e)
         {
-            List<User> agreedUserClone = meet.AgreedByUser.GetRange(0, meet.AgreedByUser.Count);
 
-            for (int i = 0; i < agreedUserClone.Count; i++)
+            Relation<User> rel = new Relation<User>();
+            bool bool1 = true;
+            foreach (Relation<User> user in meet.AgreedByUser)
             {
-                User item = agreedUserClone[i];
-
-                if (item.id != StorageManager.loggedUser.id)
+                if (user.Get().Name == StorageManager.loggedUser.Name) //pokud ještě nejsem v listu
                 {
-                    if(!meet.AgreedByUser.Contains(item))
-                    {
-                        meet.AgreedByUser.Add(StorageManager.loggedUser);
-                    }
-                    
+                    bool1 = false;
                 }
-                //else
-                //{
-                //    meet.RejectedByUser.Remove(item);
-                //    meet.AgreedByUser.Add(StorageManager.loggedUser);
-                //}
+            }
+            if(bool1)
+            {
+                meet.AgreedByUser.Add(Relation<User>.Create(StorageManager.GetStorage().findUserByName(StorageManager.loggedUser.Name)));
             }
 
+            bool bool2 = false;
+            foreach (Relation<User> user in meet.RejectedByUser)
+            {
+                if (user.Get().Name == StorageManager.loggedUser.Name) //pokud jsem v opačném listu
+                {
+                    bool2 = true;
+                    rel = user;
+                }
+            }
+            if (bool2)
+            {
+                meet.RejectedByUser.Remove(rel);
+            }
 
             StorageManager.GetStorage().UpdateMeeting(meet);
             StorageManager.Save();
-
 
             this.Close();
         }

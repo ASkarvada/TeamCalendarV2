@@ -69,9 +69,9 @@ namespace TeamCalendar
             DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
             DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
 
-            List<User> agreedByUser = new List<User>();
-            agreedByUser.Add(StorageManager.loggedUser);
-            List<User> rejectedByUser = new List<User>();
+            List<Relation<User>> agreedByUser = new List<Relation<User>>();
+            agreedByUser.Add(Relation<User>.Create(StorageManager.GetStorage().findUserByName(StorageManager.loggedUser.Name)));
+            List<Relation<User>> rejectedByUser = new List<Relation<User>>();
 
             StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, CreatingMeeting.loadInvitedUsers(tb_people.Text), tb_place.Text, color, from, to, StorageManager.loggedUser, agreedByUser, rejectedByUser));
             
