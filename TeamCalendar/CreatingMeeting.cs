@@ -41,7 +41,7 @@ namespace TeamCalendar
             lminuty.AddRange(minuty);
             try
             {
-                if (!lhodiny.Contains(Int32.Parse(od_h))) spravne++;
+                if (lhodiny.Contains(Int32.Parse(od_h))) spravne++;
             }
             catch
             {
@@ -49,7 +49,7 @@ namespace TeamCalendar
             }
             try
             {
-                if (!lhodiny.Contains(Int32.Parse(do_h))) spravne++;
+                if (lhodiny.Contains(Int32.Parse(do_h))) spravne++;
             }
             catch
             {
@@ -57,7 +57,7 @@ namespace TeamCalendar
             }
             try
             {
-                if (!lminuty.Contains(Int32.Parse(od_m))) spravne++;
+                if (lminuty.Contains(Int32.Parse(od_m))) spravne++;
             }
             catch
             {
@@ -65,7 +65,7 @@ namespace TeamCalendar
             }
             try
             {
-                if (!lminuty.Contains(Int32.Parse(do_m))) spravne++;
+                if (lminuty.Contains(Int32.Parse(do_m))) spravne++;
             }
             catch
             {
