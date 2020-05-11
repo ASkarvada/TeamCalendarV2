@@ -98,7 +98,7 @@ namespace TeamCalendar
 
                         if (listOfMeetingsInDay[i].From.Hour > sum.Hour) //pokud nejdřívější meeting začne později než by skončil náš spontální
                         {
-                            return sum;
+                            return dtNow;
                         }
                         else
                         {

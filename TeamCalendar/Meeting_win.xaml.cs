@@ -64,20 +64,40 @@ namespace TeamCalendar
 
         private void b_createMeeting_Click(object sender, RoutedEventArgs e)
         {
-            CreatingMeeting.DateCheck(tb_od_h.Text, tb_od_m.Text, tb_do_h.Text, tb_do_m.Text);
+            bool dateCheck = CreatingMeeting.DateCheck(tb_od_h.Text, tb_od_m.Text, tb_do_h.Text, tb_do_m.Text);
 
-            DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
-            DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
+            if(dateCheck)
+            {
+                DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
+                DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
 
-            List<Relation<User>> agreedByUser = new List<Relation<User>>();
-            agreedByUser.Add(Relation<User>.Create(StorageManager.GetStorage().findUserByName(StorageManager.loggedUser.Name)));
-            List<Relation<User>> rejectedByUser = new List<Relation<User>>();
+                if (from < to && dateCheck)
+                {
+                    if (tb_nazevSch.Text == "" || tb_nazevSch.Text == " " || tb_place.Text == "" || tb_place.Text == " ")
+                    {
+                        System.Windows.MessageBox.Show("Některá pole jsou prázdná");
+                    }
+                    else
+                    {
+                        List<Relation<User>> agreedByUser = new List<Relation<User>>();
+                        agreedByUser.Add(Relation<User>.Create(StorageManager.GetStorage().findUserByName(StorageManager.loggedUser.Name)));
+                        List<Relation<User>> rejectedByUser = new List<Relation<User>>();
 
-            StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, CreatingMeeting.loadInvitedUsers(tb_people.Text), tb_place.Text, color, from, to, StorageManager.loggedUser, agreedByUser, rejectedByUser));
+                        StorageManager.GetStorage().meetings.Add(Meeting.Create(tb_nazevSch.Text, CreatingMeeting.loadInvitedUsers(tb_people.Text), tb_place.Text, color, from, to, StorageManager.loggedUser, agreedByUser, rejectedByUser));
+
+                        StorageManager.Save();
+                        this.Close();
+                        System.Windows.MessageBox.Show("Meeting vytvořen");
+                    }
+                    
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Datumy jsou špatně!");
+                }
+            }
             
-            StorageManager.Save();
-            this.Close();
-            System.Windows.MessageBox.Show("Meeting vytvořen");
+            
         }
 
         

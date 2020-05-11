@@ -159,31 +159,45 @@ namespace TeamCalendar
 
         private void b_upravit_Click(object sender, RoutedEventArgs e)
         {
+            bool dateCheck = CreatingMeeting.DateCheck(tb_od_h.Text, tb_od_m.Text, tb_do_h.Text, tb_do_m.Text);
 
-            if(CreatingMeeting.DateCheck(tb_od_h.Text, tb_od_m.Text, tb_do_h.Text, tb_do_m.Text))
+            if (dateCheck)
             {
-                //ohlídat
                 DateTime from = new DateTime(dp_od.SelectedDate.Value.Year, dp_od.SelectedDate.Value.Month, dp_od.SelectedDate.Value.Day, Int32.Parse(tb_od_h.Text), Int32.Parse(tb_od_m.Text), 0);
                 DateTime to = new DateTime(dp_do.SelectedDate.Value.Year, dp_do.SelectedDate.Value.Month, dp_do.SelectedDate.Value.Day, Int32.Parse(tb_do_h.Text), Int32.Parse(tb_do_m.Text), 0);
 
-                meet.Name = tb_nazevSch.Text;
-                meet.InvitedUser = CreatingMeeting.loadInvitedUsers(tb_people.Text);
-                meet.Misto = tb_place.Text;
-                meet.Color = color;
-                meet.From = from;
-                meet.To = to;
-                meet.CreatedBy = meet.CreatedBy;
-                meet.AgreedByUser = meet.AgreedByUser;
-                meet.RejectedByUser = meet.RejectedByUser;
+                if (from < to && dateCheck)
+                {
+                    if (tb_nazevSch.Text == "" || tb_nazevSch.Text == " " || tb_place.Text == "" || tb_place.Text == " ")
+                    {
+                        System.Windows.MessageBox.Show("Některá pole jsou prázdná");
+                    }
+                    else
+                    {
+                        meet.Name = tb_nazevSch.Text;
+                        meet.InvitedUser = CreatingMeeting.loadInvitedUsers(tb_people.Text);
+                        meet.Misto = tb_place.Text;
+                        meet.Color = color;
+                        meet.From = from;
+                        meet.To = to;
+                        meet.CreatedBy = meet.CreatedBy;
+                        meet.AgreedByUser = meet.AgreedByUser;
+                        meet.RejectedByUser = meet.RejectedByUser;
 
 
-                StorageManager.GetStorage().UpdateMeeting(meet);
-                StorageManager.Save();
-                this.Close();
-                System.Windows.MessageBox.Show("Meeting upraven");
+                        StorageManager.GetStorage().UpdateMeeting(meet);
+                        StorageManager.Save();
+                        this.Close();
+                        System.Windows.MessageBox.Show("Meeting upraven");
+                    }
+
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Datumy jsou špatně!");
+                }
             }
 
-            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
