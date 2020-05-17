@@ -13,7 +13,7 @@ namespace TeamCalendar
 
         public static User loggedUser;
 
-        const string storagePath = "storage.xml";
+        public static string storagePath = @"storage.xml";
 
         public static Storage GetStorage()
         {

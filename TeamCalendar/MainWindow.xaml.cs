@@ -71,7 +71,7 @@ namespace TeamCalendar
             User user = StorageManager.GetStorage().findUserByName(tb_login_jmeno.Text);
             if (user == null)
             {
-                MessageBox.Show("Uživatel neexstuje");
+                MessageBox.Show("Uživatel neexistuje");
             }
             else
             {

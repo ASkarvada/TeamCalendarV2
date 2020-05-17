@@ -201,6 +201,7 @@ namespace TeamCalendar
 
                 foreach (Meeting meetingInMonth in mD) //procházení všech meetingů v měsíci
                 {
+                    
                     int x = 0;
                     int y = 0;
                     for (int i = 0; i < 42; i++) //procházení po dnech
